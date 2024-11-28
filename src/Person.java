@@ -3,6 +3,10 @@ public abstract class Person {
     private int age;
     private String address;
 
+    // non-parameter constructor
+    public Person() {
+    }
+
     // Parameterized Constructor
     public Person(String name, int age, String address) {
         this.name = name;
