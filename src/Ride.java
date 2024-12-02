@@ -1,22 +1,23 @@
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.Comparator;
+import java.util.Collections;
 
 public class Ride implements RideInterface {
     private String rideName;
     private int capacity;
     private Employee operator;
-    private Queue<Visitor> waitingQueue;
-    private List<Visitor> rideHistory;
+    private Queue<Visitor> waitingQueue;  // Queue for visitors waiting
+    private LinkedList<Visitor> rideHistory; // For visitors who took the ride
 
     // Constructor
     public Ride(String rideName, int capacity, Employee operator) {
         this.rideName = rideName;
         this.capacity = capacity;
         this.operator = operator;
-        this.waitingQueue = new LinkedList<>(); // Use LinkedList as a Queue
-        this.rideHistory = new ArrayList<>();
+        this.waitingQueue = new LinkedList<>();
+        this.rideHistory = new LinkedList<>();
     }
 
     // Getters and Setters
@@ -44,7 +45,7 @@ public class Ride implements RideInterface {
         this.operator = operator;
     }
 
-    // Implement RideInterface methods for Queue management
+    // RideInterface methods
     @Override
     public void addVisitorToQueue(Visitor visitor) {
         waitingQueue.offer(visitor);
@@ -73,7 +74,6 @@ public class Ride implements RideInterface {
         }
     }
 
-    // Implement RideInterface methods for ride operations
     @Override
     public void runOneCycle() {
         System.out.println("Running one cycle of " + rideName + "...");
@@ -86,11 +86,14 @@ public class Ride implements RideInterface {
     @Override
     public void addVisitorToHistory(Visitor visitor) {
         rideHistory.add(visitor);
+        System.out.println(visitor.getName() + " has been added to the ride history for " + rideName);
     }
 
     @Override
     public boolean checkVisitorFromHistory(Visitor visitor) {
-        return rideHistory.contains(visitor);
+        boolean found = rideHistory.contains(visitor);
+        System.out.println(visitor.getName() + (found ? " is " : " is not ") + "in the ride history for " + rideName);
+        return found;
     }
 
     @Override
@@ -101,8 +104,16 @@ public class Ride implements RideInterface {
     @Override
     public void printRideHistory() {
         System.out.println("Ride History for " + rideName + ":");
-        for (Visitor v : rideHistory) {
-            System.out.println("- " + v.getName());
+        Iterator<Visitor> iterator = rideHistory.iterator();
+        while (iterator.hasNext()) {
+            Visitor v = iterator.next();
+            System.out.println("- " + v.getName() + ", Ticket ID: " + v.getTicketId());
         }
+    }
+
+    // Sort Ride History
+    public void sortRideHistory(Comparator<Visitor> comparator) {
+        Collections.sort(rideHistory, comparator);
+        System.out.println("Ride history has been sorted for " + rideName);
     }
 }
