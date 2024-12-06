@@ -3,6 +3,10 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.Comparator;
 import java.util.Collections;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -27,6 +31,30 @@ public class Ride implements RideInterface {
         this.rideHistory = new LinkedList<>();
         this.maxRider = maxRider;  // Set maxRider for the ride
         this.numOfCycles = 0; // Initially, no cycles have been run
+    }
+
+    // Export Ride History to a file
+    public void exportRideHistory(String fileName) {
+        if (rideHistory.isEmpty()) {
+            System.out.println("No visitors in the ride history to export.");
+            return;
+        }
+        // Try to write the ride history to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            // Write the header
+            writer.write("Ride History for " + rideName + "\n");
+            writer.write("=======================================\n");
+
+            // Iterate over rideHistory and write each visitor's details
+            for (Visitor visitor : rideHistory) {
+                writer.write(visitor.getName() + ", Ticket ID: " + visitor.getTicketId() + "\n");
+            }
+
+            System.out.println("Ride history has been successfully exported to " + fileName);
+        } catch (IOException e) {
+            // Handle file-related exceptions
+            System.err.println("Error exporting ride history to file: " + e.getMessage());
+        }
     }
 
     // Getters and Setters

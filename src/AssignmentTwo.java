@@ -6,6 +6,8 @@ public class AssignmentTwo {
         assignment.partThree();
         assignment.partFourA();
         assignment.partFourB();
+        assignment.partFive();
+        assignment.partSix();
     }
 
     public void partThree() {
@@ -142,8 +144,31 @@ public class AssignmentTwo {
     // Additional methods can be added here as needed
 
     public void partSix() {
-        // Implement additional requirements for Part 6 (if applicable)
+        // Create an Employee (operator)
+        Employee operator = new Employee("Alice", 30, "Park Lane", "E001", "Operator");
+
+        // Create a Ride object
+        Ride rollerCoaster = new Ride("Roller Coaster", 4, operator);
+
+        // Create and add visitors to the queue
+        Visitor v1 = new Visitor("Jack", 20, "Green Street", "T001", "Regular");
+        Visitor v2 = new Visitor("Sharon", 25, "Blue Avenue", "T002", "Regular");
+        Visitor v3 = new Visitor("Benny", 22, "Yellow Road", "T003", "Regular");
+        Visitor v4 = new Visitor("Leo", 30, "Orange Boulevard", "T004", "Regular");
+
+        // Add visitors to the ride queue
+        rollerCoaster.addVisitorToQueue(v1);
+        rollerCoaster.addVisitorToQueue(v2);
+        rollerCoaster.addVisitorToQueue(v3);
+        rollerCoaster.addVisitorToQueue(v4);
+
+        // Run one cycle of the ride
+        rollerCoaster.runOneCycle();
+
+        // Export the ride history to a file
+        rollerCoaster.exportRideHistory("ride_history.txt"); // Export to "ride_history.txt"
     }
+
 
     public void partSeven() {
         // Implement additional requirements for Part 7 (if applicable)
