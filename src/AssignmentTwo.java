@@ -8,6 +8,7 @@ public class AssignmentTwo {
         assignment.partFourB();
         assignment.partFive();
         assignment.partSix();
+        assignment.partSeven();
     }
 
     public void partThree() {
@@ -171,6 +172,19 @@ public class AssignmentTwo {
 
 
     public void partSeven() {
-        // Implement additional requirements for Part 7 (if applicable)
+        // Create an Employee (operator)
+        Employee operator = new Employee("Alice", 30, "Park Lane", "E001", "Operator");
+
+        // Create a new Ride object
+        Ride rollerCoaster = new Ride("Roller Coaster", 4, operator);
+
+        // Import the ride history from the file (this file should exist)
+        rollerCoaster.importRideHistory("ride_history.txt");
+
+        // Print the number of Visitors in the ride history
+        System.out.println("Number of visitors in the imported history: " + rollerCoaster.numberOfVisitors());
+
+        // Print all Visitors in the ride history
+        rollerCoaster.printRideHistory();
     }
 }

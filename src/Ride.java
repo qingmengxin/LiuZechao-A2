@@ -6,7 +6,8 @@ import java.util.Collections;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -54,6 +55,34 @@ public class Ride implements RideInterface {
         } catch (IOException e) {
             // Handle file-related exceptions
             System.err.println("Error exporting ride history to file: " + e.getMessage());
+        }
+    }
+
+    // Import Ride History from a file
+    public void importRideHistory(String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            // Skip the first two lines (header)
+            reader.readLine();  // Skip the first header line ("Ride History for ...")
+            reader.readLine();  // Skip the second header line (divider)
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Each line is expected to be in the format: Name, Ticket ID: ID
+                String[] parts = line.split(", ");
+                if (parts.length == 2) {
+                    String name = parts[0].trim();
+                    String ticketId = parts[1].split(":")[1].trim();
+
+                    // Create a new Visitor object
+                    Visitor visitor = new Visitor(name, 0, "", ticketId, "Regular");
+                    addVisitorToHistory(visitor);
+                }
+            }
+
+            System.out.println("Ride history has been successfully imported from " + fileName);
+        } catch (IOException e) {
+            // Handle file-related exceptions
+            System.err.println("Error importing ride history from file: " + e.getMessage());
         }
     }
 
